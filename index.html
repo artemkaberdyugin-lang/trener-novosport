@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Александр Иванов — персональный тренер в Новосибирске</title>
+<meta name="description" content="Хватит начинать с понедельника. Дипломированный тренер в Новосибирске: тренировки в зале и онлайн-ведение до результата.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk:#EFEDE8;      /* магнезия */
+    --iron:#17171A;       /* чугун */
+    --red:#C8102E;        /* красный диск 25 кг */
+    --red-dark:#9C0C23;
+    --steel:#77777D;
+    --line:#D8D5CE;
+    --blue:#0057B7;
+    --yellow:#E8B006;
+    --green:#0E8A3E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--chalk);color:var(--iron);
+    font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Russo One',sans-serif;font-weight:400;line-height:1.05;text-transform:uppercase}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  section{padding:88px 0}
+  @media(max-width:640px){section{padding:60px 0}}
+
+  /* появление при скролле */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.on{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+  /* ---------- шапка ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(239,237,232,.92);backdrop-filter:blur(8px);
+    border-bottom:2px solid var(--iron);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:'Russo One';font-size:18px;text-transform:uppercase;display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo .dot{width:14px;height:14px;border-radius:50%;background:var(--red);display:inline-block;border:3px solid var(--iron)}
+  .nav-links{display:flex;gap:28px;font-weight:600;font-size:15px}
+  .nav-links a{text-decoration:none;opacity:.85}
+  .nav-links a:hover{color:var(--red);opacity:1}
+  @media(max-width:820px){.nav-links{display:none}}
+  .btn{
+    display:inline-block;background:var(--red);color:#fff;text-decoration:none;
+    font-family:'Russo One';text-transform:uppercase;font-size:15px;letter-spacing:.03em;
+    padding:14px 28px;border:3px solid var(--iron);box-shadow:5px 5px 0 var(--iron);
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .btn:hover{background:var(--red-dark);transform:translate(2px,2px);box-shadow:3px 3px 0 var(--iron)}
+  .btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .btn.small{padding:10px 18px;font-size:13px;box-shadow:4px 4px 0 var(--iron)}
+  .btn.ghost{background:transparent;color:var(--iron)}
+  .btn.ghost:hover{background:var(--iron);color:var(--chalk)}
+
+  /* ---------- герой ---------- */
+  .hero{position:relative;overflow:hidden;padding:88px 0 96px;border-bottom:3px solid var(--iron)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .photo-frame{
+    position:relative;justify-self:end;width:min(100%,440px);
+    border:3px solid var(--iron);background:#fff;box-shadow:12px 12px 0 var(--red);
+  }
+  @media(max-width:900px){.photo-frame{justify-self:center;order:-1;width:min(100%,380px)}}
+  .photo-frame img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+  .photo-frame .ph-fallback{
+    display:none;aspect-ratio:4/5;align-items:center;justify-content:center;text-align:center;padding:24px;
+    background:repeating-linear-gradient(45deg,#E4E1DA,#E4E1DA 12px,#DCD9D1 12px,#DCD9D1 24px);
+    color:var(--steel);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;line-height:1.7;
+  }
+  .photo-frame .photo-tag{
+    position:absolute;left:-14px;bottom:26px;background:var(--iron);color:var(--chalk);
+    font-family:'Russo One';font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:10px 18px;
+  }
+  .photo-frame .photo-tag span{color:var(--red)}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:34px;height:3px;background:var(--red)}
+  .hero h1{font-size:clamp(38px,6.4vw,72px)}
+  .hero h1 .strike{position:relative;white-space:nowrap}
+  .hero h1 .strike::after{
+    content:"";position:absolute;left:-2%;top:52%;width:0;height:6px;background:var(--red);transform:rotate(-2deg);
+    animation:strike .5s ease .7s forwards;
+  }
+  @keyframes strike{to{width:104%}}
+  .hero h1 .accent{color:var(--red)}
+  .hero p.lead{font-size:clamp(17px,2vw,20px);max-width:50ch;margin:26px 0 34px;font-weight:500}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .hero-note{font-size:14px;color:var(--steel);margin-top:14px;font-weight:600}
+  .hero-stats{display:flex;gap:44px;flex-wrap:wrap;margin-top:44px}
+  .hero-stats .stat b{font-family:'Russo One';font-size:28px;display:block}
+  .hero-stats .stat span{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--steel);font-weight:700}
+
+  /* ---------- бегущая строка ---------- */
+  .marquee{
+    background:var(--iron);color:var(--chalk);border-bottom:3px solid var(--iron);
+    overflow:hidden;padding:14px 0;white-space:nowrap;
+  }
+  .marquee .track{display:inline-block;animation:run 22s linear infinite}
+  .marquee span{
+    font-family:'Russo One';font-size:15px;letter-spacing:.14em;text-transform:uppercase;margin-right:44px;
+  }
+  .marquee span b{color:var(--red);font-weight:400}
+  @keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- заголовки секций ---------- */
+  .sec-head{display:flex;align-items:center;gap:18px;margin-bottom:44px}
+  .plate-mark{
+    flex:none;width:58px;height:58px;border-radius:50%;border:4px solid var(--iron);position:relative;
+    display:flex;align-items:center;justify-content:center;font-family:'Russo One';font-size:15px;color:#fff;
+  }
+  .plate-mark::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--chalk);border:3px solid var(--iron);position:absolute}
+  .plate-mark.kg25{background:var(--red)}
+  .plate-mark.kg20{background:var(--blue)}
+  .plate-mark.kg15{background:var(--yellow)}
+  .plate-mark.kg10{background:var(--green)}
+  .sec-head h2{font-size:clamp(28px,4vw,44px)}
+  .sec-sub{color:var(--steel);font-weight:600;max-width:62ch;margin:-28px 0 44px 76px}
+  @media(max-width:640px){.sec-sub{margin-left:0}}
+
+  /* ---------- боли ---------- */
+  .pains{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:820px){.pains{grid-template-columns:1fr}}
+  .pain{
+    background:#fff;border:3px solid var(--iron);padding:26px 26px 26px 24px;
+    display:flex;gap:18px;align-items:flex-start;box-shadow:7px 7px 0 var(--line);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .pain:hover{transform:translate(-3px,-3px);box-shadow:10px 10px 0 var(--line)}
+  .pain .x{
+    flex:none;width:34px;height:34px;border:3px solid var(--red);color:var(--red);
+    font-family:'Russo One';font-size:17px;display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .pain b{display:block;font-size:17px;margin-bottom:8px;line-height:1.35}
+  .pain p{font-size:14.5px;color:#3c3c40}
+  .pain p strong{color:var(--red)}
+  .pain-cta{
+    margin-top:34px;background:var(--iron);color:var(--chalk);border:3px solid var(--iron);
+    padding:30px 30px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  }
+  .pain-cta .t{font-family:'Russo One';font-size:clamp(17px,2.4vw,22px);text-transform:uppercase;max-width:34ch}
+  .pain-cta .t span{color:var(--red)}
+
+  /* ---------- что изменится ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:900px){.grid3{grid-template-columns:1fr}}
+  .card{
+    background:#fff;border:3px solid var(--iron);padding:30px 26px;box-shadow:7px 7px 0 var(--line);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:10px 10px 0 var(--red)}
+  .card h3{font-size:19px;margin-bottom:12px}
+  .card p{font-size:15.5px;color:#3c3c40}
+  .card .tag{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--red);margin-bottom:14px;border-bottom:3px solid var(--red);padding-bottom:4px;
+  }
+
+  /* ---------- тёмные секции ---------- */
+  .dark{background:var(--iron);color:var(--chalk);border-top:3px solid var(--iron);border-bottom:3px solid var(--iron)}
+  .dark .sec-head h2{color:var(--chalk)}
+  .dark .plate-mark{border-color:var(--chalk)}
+  .dark .plate-mark::after{background:var(--iron);border-color:var(--chalk)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--steel)}
+  @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--iron);padding:30px 24px}
+  .step b.num{font-family:'Russo One';font-size:15px;color:var(--red);display:block;margin-bottom:14px;letter-spacing:.1em}
+  .step h3{font-size:17px;margin-bottom:10px;color:#fff}
+  .step p{font-size:14.5px;color:#B9B9BE}
+
+  /* ---------- что входит ---------- */
+  .include{display:grid;grid-template-columns:1fr 1fr;border:3px solid var(--iron);background:#fff}
+  @media(max-width:820px){.include{grid-template-columns:1fr}}
+  .include .cell{padding:26px 28px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:flex-start}
+  .include .cell:nth-child(odd){border-right:1px solid var(--line)}
+  @media(max-width:820px){.include .cell:nth-child(odd){border-right:none}}
+  .include .cell:last-child,.include .cell:nth-last-child(2){border-bottom:none}
+  @media(max-width:820px){.include .cell:nth-last-child(2){border-bottom:1px solid var(--line)}}
+  .check{flex:none;width:26px;height:26px;background:var(--red);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid var(--iron)}
+  .include b{display:block;font-size:16px}
+  .include span{font-size:14px;color:var(--steel);font-weight:500}
+
+  /* ---------- цены ---------- */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+  @media(max-width:900px){.prices{grid-template-columns:1fr}}
+  .price{
+    background:#fff;border:3px solid var(--iron);padding:34px 28px;position:relative;
+    display:flex;flex-direction:column;box-shadow:7px 7px 0 var(--line);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .price:hover{transform:translate(-3px,-3px);box-shadow:10px 10px 0 var(--line)}
+  .price.hot{background:var(--iron);color:var(--chalk);box-shadow:7px 7px 0 var(--red)}
+  .price.hot:hover{box-shadow:10px 10px 0 var(--red)}
+  .price.hot .p-desc{color:#B9B9BE}
+  .price .flag{
+    position:absolute;top:-16px;right:20px;background:var(--red);color:#fff;
+    font-family:'Russo One';font-size:12px;text-transform:uppercase;letter-spacing:.08em;
+    padding:6px 14px;border:3px solid var(--iron);
+  }
+  .price h3{font-size:20px;margin-bottom:6px}
+  .p-desc{font-size:14.5px;color:var(--steel);margin-bottom:22px;font-weight:500}
+  .p-cost{font-family:'Russo One';font-size:34px;margin-bottom:4px}
+  .p-cost small{font-size:15px;color:var(--steel)}
+  .p-list{list-style:none;margin:20px 0 28px;flex:1}
+  .p-list li{padding:8px 0;font-size:15px;border-bottom:1px dashed var(--line);font-weight:500}
+  .price.hot .p-list li{border-color:#3a3a3f}
+  .price .btn{text-align:center}
+
+  /* ---------- результаты ---------- */
+  .results{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:900px){.results{grid-template-columns:1fr}}
+  .result{border:3px solid var(--iron);background:#fff;box-shadow:7px 7px 0 var(--line)}
+  .result .ph{
+    aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#E4E1DA,#E4E1DA 12px,#DCD9D1 12px,#DCD9D1 24px);
+    display:flex;align-items:center;justify-content:center;color:var(--steel);
+    font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;text-align:center;padding:12px;
+    border-bottom:3px solid var(--iron);
+  }
+  .result .body{padding:22px 24px}
+  .result .body b{font-family:'Russo One';font-size:16px;display:block;margin-bottom:8px}
+  .result .body p{font-size:14.5px;color:#3c3c40}
+  .dark .result{background:#1f1f23;border-color:#000;box-shadow:7px 7px 0 #000}
+  .dark .result .body p{color:#B9B9BE}
+
+  /* ---------- FAQ ---------- */
+  details{border:3px solid var(--iron);background:#fff;margin-bottom:14px}
+  summary{
+    cursor:pointer;padding:20px 24px;font-family:'Russo One';font-size:16px;text-transform:uppercase;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:24px;color:var(--red);flex:none}
+  details[open] summary::after{content:"–"}
+  details .a{padding:0 24px 22px;color:#3c3c40;font-size:15.5px;max-width:70ch}
+
+  /* ---------- финальный CTA ---------- */
+  .final{background:var(--red);color:#fff;border-top:3px solid var(--iron)}
+  .final h2{font-size:clamp(32px,5vw,56px);max-width:18ch}
+  .final p{margin:22px 0 34px;font-weight:600;max-width:52ch}
+  .final .btn{background:var(--iron);box-shadow:5px 5px 0 #7c0a1c}
+  .final .btn:hover{background:#000;box-shadow:3px 3px 0 #7c0a1c}
+  .final .btn.ghost{background:transparent;border-color:#fff;color:#fff;box-shadow:5px 5px 0 #7c0a1c}
+  .final .btn.ghost:hover{background:#fff;color:var(--red)}
+
+  footer{background:var(--iron);color:#9a9aa0;font-size:13.5px;padding:34px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer a{color:var(--chalk)}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .btn,.card,.pain,.price{transition:none}
+    .marquee .track{animation:none}
+    .hero h1 .strike::after{animation:none;width:104%}
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><span class="dot"></span>Иванов&nbsp;/&nbsp;Тренер</a>
+    <nav class="nav-links">
+      <a href="#pains">Узнаёшь себя?</a>
+      <a href="#change">Что изменится</a>
+      <a href="#format">Как работаем</a>
+      <a href="#price">Цены</a>
+      <a href="#results">Результаты</a>
+    </nav>
+    <a class="btn small" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Написать в Telegram</a>
+  </div>
+</header>
+
+<!-- ГЕРОЙ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Персональный тренер · Новосибирск</div>
+        <h1><span class="strike">«С понедельника»</span> не работает.<br><span class="accent">Система — работает.</span></h1>
+        <p class="lead">Ты уже пробовал: абонемент, программы из ютуба, «месяц без сладкого». Каждый раз всё заканчивалось через две недели — не потому что ты слабый, а потому что не было плана и человека, который с тебя спросит. Я — Александр Иванов, дипломированный тренер. Со мной ты дойдёшь до результата, потому что бросить я не дам.</p>
+        <div class="hero-cta">
+          <a class="btn" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Хочу результат — пишу</a>
+          <a class="btn ghost" href="#pains">Сначала посмотрю</a>
+        </div>
+        <div class="hero-note">Первое сообщение ни к чему не обязывает: расскажешь про цель — я честно скажу, реален ли твой срок.</div>
+      </div>
+
+      <div class="photo-frame">
+        <!-- Замените src на файл с фотографией тренера (вертикальное фото 4:5, из зала) -->
+        <img src="foto-trenera.jpg" alt="Александр Иванов — персональный тренер, Новосибирск"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ph-fallback">Сюда — фото тренера<br>вертикальное, 4:5<br>файл: foto-trenera.jpg<br>рядом с этим html</div>
+        <div class="photo-tag">Александр Иванов <span>/</span> тренер</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat reveal"><b>Диплом</b><span>профильное образование</span></div>
+      <div class="stat reveal d1"><b>[X] лет</b><span>тренерского стажа</span></div>
+      <div class="stat reveal d2"><b>[XX]+</b><span>учеников дошли до цели</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- БЕГУЩАЯ СТРОКА -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Когда, если не сейчас <b>·</b> Действуй <b>·</b> Зал в Новосибирске <b>·</b> Онлайн из любого города <b>·</b></span><span>Когда, если не сейчас <b>·</b> Действуй <b>·</b> Зал в Новосибирске <b>·</b> Онлайн из любого города <b>·</b></span>
+  </div>
+</div>
+
+<!-- БОЛИ -->
+<section id="pains">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="plate-mark kg25">25</div>
+      <h2>Узнаёшь себя?</h2>
+    </div>
+    <div class="pains">
+      <div class="pain reveal">
+        <div class="x">✕</div>
+        <div>
+          <b>Хожу в зал полгода — в зеркале ничего не меняется</b>
+          <p>Потому что ты делаешь «что-то», а не программу. Без прогрессии нагрузки тело не меняется — оно просто привыкает. <strong>Со мной каждая тренировка — шаг по плану, а не лотерея.</strong></p>
+        </div>
+      </div>
+      <div class="pain reveal d1">
+        <div class="x">✕</div>
+        <div>
+          <b>Начинаю «с понедельника» уже третий год</b>
+          <p>Мотивация живёт две недели — дальше работает только система и человек, который спросит: «Ты где?» <strong>Пропустил тренировку без причины — я тебе напишу первым.</strong></p>
+        </div>
+      </div>
+      <div class="pain reveal">
+        <div class="x">✕</div>
+        <div>
+          <b>Боюсь зала: все смотрят, а я не знаю, что делать</b>
+          <p>Никто не рождается со знанием техники приседа. Разница между «страшно» и «уверенно» — 4–6 тренировок с тренером. <strong>Через месяц ты будешь заходить в зал как к себе домой.</strong></p>
+        </div>
+      </div>
+      <div class="pain reveal d1">
+        <div class="x">✕</div>
+        <div>
+          <b>То диета, то срыв — вес гуляет туда-сюда</b>
+          <p>Голодовки не работают: чем жёстче запрет, тем громче срыв. <strong>Я выстрою питание, с которым можно жить — с любимой едой и без чувства вины.</strong></p>
+        </div>
+      </div>
+      <div class="pain reveal">
+        <div class="x">✕</div>
+        <div>
+          <b>«У меня нет времени»: работа, семья, дела</b>
+          <p>Тебе не нужно жить в зале. Хватит 2–3 часов в неделю — если каждый час работает на цель. <strong>Программу построю под твой график, а не наоборот.</strong></p>
+        </div>
+      </div>
+      <div class="pain reveal d1">
+        <div class="x">✕</div>
+        <div>
+          <b>Уже была травма — теперь страшно нагружаться</b>
+          <p>После травмы страшно всем. Но сидеть без движения — хуже: тело слабеет дальше. <strong>Учту ограничения и подберу нагрузку, которая укрепляет, а не ломает.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pain-cta reveal">
+      <div class="t">Узнал себя хотя бы в одном пункте? <span>Значит, тебе ко мне.</span></div>
+      <a class="btn" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Разобрать мою ситуацию</a>
+    </div>
+  </div>
+</section>
+
+<!-- ЧТО ИЗМЕНИТСЯ -->
+<section class="dark" id="change">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="plate-mark kg20">20</div>
+      <h2>Что изменится за 3 месяца</h2>
+    </div>
+    <div class="results">
+      <div class="result reveal">
+        <div class="body"><b>Месяц 1 — контроль</b><p>Ставим технику, входим в режим. Зал перестаёт пугать, тело перестаёт болеть после каждой тренировки. Появляется главное — привычка приходить.</p></div>
+      </div>
+      <div class="result reveal d1">
+        <div class="body"><b>Месяц 2 — первые цифры</b><p>Рабочие веса растут, объёмы и вес тела двигаются в нужную сторону. Одежда начинает сидеть иначе. Ты впервые видишь: система работает.</p></div>
+      </div>
+      <div class="result reveal d2">
+        <div class="body"><b>Месяц 3 — тебя замечают</b><p>«Ты похудел?», «Ты что, качаешься?» — вопросы, ради которых всё затевалось. А у тебя уже не «попытка №5», а образ жизни, который не хочется бросать.</p></div>
+      </div>
+    </div>
+    <p style="margin-top:34px;color:#B9B9BE;font-weight:600;max-width:66ch">Больше половины моих учеников — девушки. Штанга не делает «перекачанной» — она делает сильной и подтянутой. Проверено десятками трансформаций.</p>
+  </div>
+</section>
+
+<!-- КАК СТРОИТСЯ РАБОТА -->
+<section id="format">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="plate-mark kg15">15</div>
+      <h2>Как строится работа</h2>
+    </div>
+    <div class="steps" style="background:var(--line)">
+      <div class="step reveal" style="background:#fff">
+        <b class="num">Шаг 01</b>
+        <h3 style="color:var(--iron)">Пишешь в Telegram</h3>
+        <p style="color:#3c3c40">Цель, опыт, здоровье, график. Я честно скажу, за какой срок реально прийти к результату — без сказок про «минус 10 кг за месяц».</p>
+      </div>
+      <div class="step reveal d1" style="background:#fff">
+        <b class="num">Шаг 02</b>
+        <h3 style="color:var(--iron)">Вводная тренировка</h3>
+        <p style="color:#3c3c40">Смотрю технику и уровень, подбираю стартовые веса. Уже после первой встречи у тебя есть план на месяц.</p>
+      </div>
+      <div class="step reveal d2" style="background:#fff">
+        <b class="num">Шаг 03</b>
+        <h3 style="color:var(--iron)">Тренируемся</h3>
+        <p style="color:#3c3c40">В зале — веду каждый подход лично. Онлайн — программа, видеоразборы техники и связь со мной в мессенджере каждый день.</p>
+      </div>
+      <div class="step reveal d3" style="background:#fff">
+        <b class="num">Шаг 04</b>
+        <h3 style="color:var(--iron)">Фиксируем результат</h3>
+        <p style="color:#3c3c40">Замеры, дневник нагрузок, правки программы и питания каждые 2–4 недели. Прогресс — в цифрах, а не в ощущениях.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:64px" class="reveal">
+      <div class="sec-head">
+        <div class="plate-mark kg10">10</div>
+        <h2>Что входит в ведение</h2>
+      </div>
+      <div class="include">
+        <div class="cell"><span class="check">✓</span><div><b>Программа под твою цель</b><span>не шаблон из интернета — план под твой уровень, график и зал</span></div></div>
+        <div class="cell"><span class="check">✓</span><div><b>Постановка техники</b><span>жим, присед, тяга и всё остальное — безопасно и с прогрессом</span></div></div>
+        <div class="cell"><span class="check">✓</span><div><b>Питание, с которым можно жить</b><span>без «куриной грудки на пару» три раза в день</span></div></div>
+        <div class="cell"><span class="check">✓</span><div><b>Связь со мной каждый день</b><span>вопросы, разбор видео, поддержка, когда хочется всё бросить</span></div></div>
+        <div class="cell"><span class="check">✓</span><div><b>Замеры и контроль прогресса</b><span>вес, объёмы, рабочие веса — видно, что работает</span></div></div>
+        <div class="cell"><span class="check">✓</span><div><b>Учёт травм и ограничений</b><span>тренируемся так, чтобы становиться здоровее, а не наоборот</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЦЕНЫ -->
+<section class="dark" id="price">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="plate-mark kg25">25</div>
+      <h2>Сколько стоит твой результат</h2>
+    </div>
+    <p class="sec-sub reveal" style="color:#B9B9BE">Посчитай, сколько уже ушло на абонементы, марафоны и «чудо-курсы», которые не сработали. Дешевле один раз сделать правильно. Точную цену и свободные окна уточняй в Telegram — мест на персональное ведение ограниченное количество.</p>
+    <div class="prices">
+      <div class="price reveal">
+        <h3>Разовая тренировка</h3>
+        <p class="p-desc">Познакомиться, поставить технику, получить план на месяц</p>
+        <div class="p-cost">[1 500] ₽ <small>/ занятие</small></div>
+        <ul class="p-list">
+          <li>60–90 минут в зале, Новосибирск</li>
+          <li>Разбор техники базовых движений</li>
+          <li>Рекомендации на самостоятельные тренировки</li>
+        </ul>
+        <a class="btn ghost" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Уточнить в Telegram</a>
+      </div>
+      <div class="price hot reveal d1">
+        <span class="flag">Чаще всего берут</span>
+        <h3>Персональное ведение в зале</h3>
+        <p class="p-desc">Тренировки со мной 2–3 раза в неделю + полное сопровождение</p>
+        <div class="p-cost">[10 000] ₽ <small>/ месяц</small></div>
+        <ul class="p-list">
+          <li>8–12 персональных тренировок</li>
+          <li>Программа + питание + замеры</li>
+          <li>Связь со мной 7 дней в неделю</li>
+        </ul>
+        <a class="btn" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Занять место</a>
+      </div>
+      <div class="price reveal d2">
+        <h3>Онлайн-ведение</h3>
+        <p class="p-desc">Для тех, кто тренируется сам — в любом городе и зале</p>
+        <div class="p-cost">[5 000] ₽ <small>/ месяц</small></div>
+        <ul class="p-list">
+          <li>Программа под твой зал и график</li>
+          <li>Видеоразбор техники каждую неделю</li>
+          <li>Корректировки питания и нагрузки</li>
+        </ul>
+        <a class="btn ghost" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Уточнить в Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- РЕЗУЛЬТАТЫ -->
+<section id="results">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="plate-mark kg20">20</div>
+      <h2>Они тоже «начинали с понедельника»</h2>
+    </div>
+    <div class="results">
+      <div class="result reveal">
+        <div class="ph">Фото «до / после»<br>(вставить из закреплённых постов)</div>
+        <div class="body"><b>[Имя], [возраст]</b><p>[Например: −8 кг за 4 месяца, присед с собственным весом, «первый раз в жизни не бросила зал».]</p></div>
+      </div>
+      <div class="result reveal d1">
+        <div class="ph">Фото «до / после»<br>(вставить из закреплённых постов)</div>
+        <div class="body"><b>[Имя], [возраст]</b><p>[Короткая история: с чем пришла, что получилось, сколько времени заняло.]</p></div>
+      </div>
+      <div class="result reveal d2">
+        <div class="ph">Фото «до / после»<br>(вставить из закреплённых постов)</div>
+        <div class="body"><b>[Имя], [возраст]</b><p>[История про силу: например, с пустого грифа до приседа [XX] кг за полгода — и ни одной травмы.]</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="plate-mark kg15">15</div>
+      <h2>Последние сомнения</h2>
+    </div>
+    <details class="reveal">
+      <summary>Я никогда не тренировался. Мне точно к тебе?</summary>
+      <div class="a">Да — с новичками работать даже проще: не нужно переучивать. Начнём с лёгких весов и техники, нагрузку буду поднимать постепенно. Задача первого месяца — чтобы тело привыкло, а зал перестал быть стрессом.</div>
+    </details>
+    <details class="reveal">
+      <summary>Я девушка и не хочу «перекачаться». Это возможно?</summary>
+      <div class="a">«Перекачаться» случайно невозможно — на это уходят годы целенаправленной работы. Силовые тренировки у девушек дают подтянутую фигуру, крепкую спину и уверенность. Большая часть моих учениц пришла именно за этим.</div>
+    </details>
+    <details class="reveal">
+      <summary>В каком зале проходят тренировки?</summary>
+      <div class="a">В Новосибирске, в зале [название и адрес зала]. Если тебе удобнее другой зал или онлайн-формат — обсудим в Telegram.</div>
+    </details>
+    <details class="reveal">
+      <summary>Чем онлайн-ведение отличается от «программы из интернета»?</summary>
+      <div class="a">Программа из интернета не видит твою технику и не отвечает на вопросы. В онлайн-ведении ты каждую неделю присылаешь видео подходов, я разбираю ошибки, корректирую план и питание. По сути это персональный тренер у тебя в телефоне.</div>
+    </details>
+    <details class="reveal">
+      <summary>А если у меня травма или ограничения по здоровью?</summary>
+      <div class="a">Перед стартом обсудим всё: травмы, давление, ограничения. При необходимости адаптирую программу или порекомендую сначала проконсультироваться с врачом. Тренируемся так, чтобы становиться здоровее, а не наоборот.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ФИНАЛЬНЫЙ CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="reveal">Когда, если не сейчас? Действуй.</h2>
+    <p class="reveal d1">Через 3 месяца ты либо скажешь себе спасибо, либо снова будешь листать чужие «до/после». Напиши мне прямо сейчас — коротко: цель и опыт. Отвечу лично и скажу, с чего начать.</p>
+    <div class="hero-cta reveal d2">
+      <a class="btn" href="https://t.me/ivanovTrener" target="_blank" rel="noopener">Написать в Telegram</a>
+      <a class="btn ghost" href="https://www.instagram.com/your_coach_nsk" target="_blank" rel="noopener">Instagram: @your_coach_nsk</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Александр Иванов — персональный тренер, Новосибирск</div>
+    <div><a href="https://t.me/ivanovTrener" target="_blank" rel="noopener">t.me/ivanovTrener</a> · <a href="https://www.instagram.com/your_coach_nsk" target="_blank" rel="noopener">@your_coach_nsk</a></div>
+  </div>
+</footer>
+
+<script>
+  // плавное появление блоков при скролле
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
